@@ -3,6 +3,7 @@ import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/operations';
 import { getContacts } from 'redux/selectors';
+import toast from 'react-hot-toast';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
@@ -30,7 +31,9 @@ const ContactForm = () => {
     ) {
       alert(`${name} is already in contacts.`);
     } else {
-      dispatch(addContact({ name: name, phone: number }));
+      dispatch(addContact({ name: name, phone: number }))
+        .unwrap()
+        .then(() => { toast('contact was added')});
       setName('');
       setNumber('');
     }
